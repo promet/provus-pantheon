@@ -55,7 +55,10 @@
         "drupal/view_unpublished": "^1.0",
         "drupal/viewsreference": "^1.7",
         "drupal/vocabulary_condition": "^1.0",
-        "drupal/webform": "^6.1"
+        "drupal/webform": "^6.1",
+        "geocoder-php/google-maps-provider": "^4.6",
+        "harvesthq/chosen": "^1.8",
+        "kporras07/composer-symlinks": "^1.1"
     },
     "extra": {
         "_README": "To make a custom upstream, clone this repository and add any dependencies to be provided by this upstream to this composer.json file. Leave the root-level composer.json file for the exclusive use of each individual site; do not modify it after your custom upstream has been published. See https://pantheon.io/docs/create-custom-upstream for more information."
