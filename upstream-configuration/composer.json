@@ -101,7 +101,8 @@
         "vlucas/phpdotenv": "^5.4",
         "webflo/drupal-finder": "^1.2",
         "webmozart/path-util": "^2.3",
-        "zaporylie/composer-drupal-optimizations": "^1.2"
+        "zaporylie/composer-drupal-optimizations": "^1.2",
+        "drupal/linkit": "^6.0@beta"
     },
     "extra": {
         "_README": "To make a custom upstream, clone this repository and add any dependencies to be provided by this upstream to this composer.json file. Leave the root-level composer.json file for the exclusive use of each individual site; do not modify it after your custom upstream has been published. See https://pantheon.io/docs/create-custom-upstream for more information."
