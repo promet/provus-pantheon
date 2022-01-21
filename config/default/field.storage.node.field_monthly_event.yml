@@ -3,8 +3,6 @@ langcode: en
 status: true
 dependencies:
   enforced:
-    module:
-      - calendar_recurring_event
   module:
     - node
     - options
