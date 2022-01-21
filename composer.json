@@ -16,9 +16,15 @@
     "require": {
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
+        "drupal/auto_entitylabel": "^3.0@beta",
         "drupal/core-composer-scaffold": "^9.2",
         "drupal/core-recommended": "^9.2",
         "drupal/entity_staging": "1.x-dev@dev",
+        "drupal/inline_entity_form": "^1.0@RC",
+        "drupal/layout_builder_styles": "^1.0@beta",
+        "drupal/layout_library": "^1.0@beta",
+        "drupal/linkit": "^6.0@beta",
+        "drupal/media_bulk_upload": "^1.0@alpha",
         "drush/drush": "^10",
         "pantheon-systems/drupal-integrations": "^9",
         "pantheon-upstreams/upstream-configuration": "self.version"
