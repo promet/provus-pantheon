@@ -1,6 +1,6 @@
 {
-    "name": "pantheon-upstreams/drupal-project",
-    "description": "Install Drupal 9 with Composer on Pantheon.",
+    "name": "promet-source/provus-drupal",
+    "description": "Install Provus Drupal kickstarter by Promet Source.",
     "type": "project",
     "license": "MIT",
     "repositories": [
@@ -17,6 +17,10 @@
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/auto_entitylabel": "^3.0@beta",
+        "drupal/config_distro": "^1.0@alpha",
+        "drupal/config_merge": "^1.0@RC",
+        "drupal/config_provider": "^2.0@RC",
+        "drupal/config_snapshot": "^1.0@RC",
         "drupal/core-composer-scaffold": "^9.2",
         "drupal/core-recommended": "^9.2",
         "drupal/entity_staging": "1.x-dev@dev",
