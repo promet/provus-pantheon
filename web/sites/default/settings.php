@@ -249,7 +249,7 @@ $databases = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = 'zuK_a4x_UrQ5CKJYq5GhilDP0EsDoPBSDFxZ37C1zsuTI2LF0P-CXHsSYzd69NI90K_Ay4qC6g';
 
 /**
  * Deployment identifier.
@@ -769,4 +769,14 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
-
+$databases['default']['default'] = array (
+  'database' => 'provus',
+  'username' => 'provus',
+  'password' => 'provus',
+  'prefix' => '',
+  'host' => 'provus-distro_db_1',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['config_sync_directory'] = 'sites/default/files/config_d1aH8Oyy2a3d76GT-PAMuvodB8LJXDgzVJIvchqsS8xZHuNtgyi82uITZt4Fwl5YrUNJCTfHuQ/sync';

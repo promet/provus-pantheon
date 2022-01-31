@@ -27,7 +27,7 @@ function _provus_setup_themes() {
     \Drupal::configFactory()
       ->getEditable('system.theme')
       ->set('default', 'provus')
-      ->set('admin', 'claro')
+      ->set('admin', 'gin')
       ->save(TRUE);
   
     // Enable the admin theme.
@@ -36,4 +36,5 @@ function _provus_setup_themes() {
       ->set('use_admin_theme', TRUE)
       ->save(TRUE);
   }
+  
   

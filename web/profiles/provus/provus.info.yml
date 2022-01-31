@@ -53,49 +53,6 @@ install:
   - views_ui
   - editor
   - ckeditor
-  - entity_staging
-  - inline_entity_form
-  - layout_builder_styles
-  - layout_library
-  - linkit
-  - media_bulk_upload
-  - admin_toolbar
-  - antibot
-  - address
-  - calendar_link
-  - chosen
-  - components
-  - devel
-  - emulsify_twig
-  - environment_indicator
-  - extlink
-  - facets
-  - focal_point
-  - fullcalendar_view
-  - geocoder
-  - geofield
-  - geofield_map
-  - google_analytics
-  - layout_builder_browser
-  - layout_builder_modal
-  - menu_block
-  - menu_breadcrumb
-  - migrate_plus
-  - office_hours
-  - pathauto
-  - pdfpreview
-  - redirect
-  - search_api
-  - search_api_glossary
-  - simple_instagram_feed
-  - smart_trim
-  - socialfeed
-  - twig_tweak
-  - view_unpublished
-  - viewsreference
-  - vocabulary_condition
-  - webform
-
 
 # Required modules
 # Note that any dependencies of the modules listed here will be installed automatically.
@@ -107,4 +64,5 @@ dependencies:
 # List any themes that should be installed as part of the profile installation.
 # Note that this will not set any theme as the default theme.
 themes:
+  - gin
   - provus
