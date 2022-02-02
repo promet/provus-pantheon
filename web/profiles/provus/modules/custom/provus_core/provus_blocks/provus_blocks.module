@@ -1,0 +1,215 @@
+<?php
+
+/**
+ * @file
+ * Contains provus_blocks.module.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function provus_blocks_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the provus_blocks module.
+    case 'help.page.provus_blocks':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Gives users ability to create custom blocks that utilize bootstrap functionality.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function provus_blocks_theme_suggestions_block_alter(&$suggestions, $vars) {
+  if (!empty($vars['elements']['content']['#block_content'])) {
+    $block = $vars['elements']['content']['#block_content'];
+    $block_type = $block->bundle();
+    $base_suggestion = 'block__' . $block_type;
+    $suggestions[] = $base_suggestion;
+    // Add view mode to suggestions.
+    if (!empty($vars['elements']['content']['#view_mode'])) {
+      $suggestions[] = $base_suggestion . '__' . $vars['elements']['content']['#view_mode'];
+    }
+    // For provus cards, add our provus display mode names to suggestions.
+    if ($block_type == 'provus_card') {
+      $display_mode = !empty($vars['elements']['content']['#provus_group_item_display']) ? $vars['elements']['content']['#provus_group_item_display'] : $block->get('field_provus_item_display')->value;
+      $suggestions[] = $base_suggestion . '__provus_display_' . $display_mode;
+    }
+  }
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function provus_blocks_theme() {
+  return [
+    'block__provus_basic_text' => [
+      'template' => 'block--provus-basic-text',
+      'base hook' => 'block'
+    ],
+    'block__provus_heading' => [
+      'template' => 'block--provus-heading',
+      'base hook' => 'block'
+    ],
+    'block__provus_card' => [
+      'template' => 'block--provus-card',
+      'base hook' => 'block'
+    ],
+    'block__provus_accordion' => [
+      'template' => 'block--provus-accordion',
+      'base hook' => 'block'
+    ],
+    'block__provus_tabs' => [
+      'template' => 'block--provus-tabs',
+      'base hook' => 'block'
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function provus_blocks_preprocess_block(&$vars) {
+  // Add plugin info into block class.
+  $vars['attributes']['class'][] = Html::cleanCssIdentifier($vars['plugin_id']);
+  // Preprocess custom blocks.
+  if (!empty($vars['elements']['content']['#block_content'])) {
+    $block = $vars['elements']['content']['#block_content'];
+    $block_type = $block->bundle();
+    // Add block type to class.
+    $vars['attributes']['class'][] = Html::cleanCssIdentifier('block-' . $block_type);
+
+    if ($block_type == 'provus_heading') {
+      $vars['heading_level'] = $block->get('field_provus_heading_level')->value;
+    }
+    elseif ($block_type == 'provus_card') {
+      $display_mode = !empty($vars['elements']['content']['#provus_group_item_display']) ? $vars['elements']['content']['#provus_group_item_display'] : $block->get('field_provus_item_display')->value;
+      $vars['cardstyle'] = _provus_get_cardstyle_from_displaymode($display_mode);
+    }
+    elseif ($block_type == 'provus_accordion' || $block_type == 'provus_tabs') {
+      _provus_preprocess_accordiontabs($vars, $block);
+    }
+    if ($block_type == 'provus_tabs') {
+      $vars['orientation'] = $block->get('field_provus_orientation')->value;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function provus_blocks_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Use name and label from normal block admin screen to match.
+  $new_label = t('Block description');
+  $new_description = t('A brief description of your block.');
+  // Alter blocks on layout builder form.
+  $form_ids_blockcontent = [
+    'layout_builder_add_block',
+    'layout_builder_update_block'
+  ];
+  if (in_array($form_id, $form_ids_blockcontent) && !empty($form['settings']['block_form']['#block'])) {
+    $block = $form['settings']['block_form']['#block'];
+    $block_type = $block->bundle();
+    if (strpos($block_type, 'provus_') === 0) {
+      $form['settings']['label']['#title'] = $new_label;
+      $form['settings']['label']['#description'] = $new_description;
+      $form['settings']['admin_label']['#access'] = FALSE;
+      $form['settings']['label_display']['#default_value'] = FALSE;
+      $form['settings']['label_display']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Returns an array of names for card display modes.
+ */
+function provus_blocks_item_display_allowed_values() {
+  $options = [];
+  $provus_displays = \Drupal::config('provus.displays.card_settings')->get('displays');
+  foreach ($provus_displays as $key => $display) {
+    $options[$key] = $display['name'];
+  }
+  return $options;
+}
+
+/**
+ * Returns a default value for card display modes.
+ */
+function provus_blocks_item_display_get_default() {
+  $provus_displays = \Drupal::config('provus.displays.card_settings')->get('displays');
+  return array_key_first($provus_displays);
+}
+
+/**
+ * Get block build.
+ */
+function provus_blocks_get_block(&$block_build, $entity) {
+  $configuration = [
+    'label' => '',
+    'label_display' => BlockPluginInterface::BLOCK_LABEL_VISIBLE
+  ];
+  $block_uuid = 'block_content:' . $entity->uuid();
+  $block_plugin = \Drupal::service('plugin.manager.block')
+    ->createInstance($block_uuid, $configuration);
+  $block_build += [
+    '#theme' => 'block',
+    '#attributes' => [],
+    '#contextual_links' => [],
+    '#configuration' => $block_plugin->getConfiguration(),
+    '#plugin_id' => $block_uuid,
+    '#base_plugin_id' => 'block_content',
+    '#derivative_plugin_id' => $entity->uuid(),
+  ];
+  $block_build['content']['#ischild'] = TRUE;
+}
+
+/**
+ * Returns an array of card styles based on a display mode.
+ */
+function _provus_get_cardstyle_from_displaymode($display_mode) {
+  // Load the provus display configurations from a file.
+  $provus_displays = \Drupal::config('provus.displays.card_settings')->get('displays');
+
+  if (!empty($provus_displays[$display_mode]['cardstyle'])) {
+    return $provus_displays[$display_mode]['cardstyle'];
+  }
+  else {
+    return [];
+  }
+}
+
+/**
+ * Preprocess function for accordion and tabs.
+ */
+function _provus_preprocess_accordiontabs(&$vars, $block) {
+  $storage = \Drupal::entityTypeManager()->getStorage('block_content');
+  $vars['id'] = $block->uuid();
+  // If we have an accordion, we have an option for open first item initially.
+  if ($block->hasField('field_provus_openfirst')) {
+    $vars['openfirst'] = $block->get('field_provus_openfirst')->value;
+  }
+  // Loop through the accordion or tabs items and store each item in a variable
+  // for the accordion block to render in it's template.
+  $id_array = $block->get('field_provus_items')->getValue();
+  if (!empty($id_array)) {
+    foreach ($id_array as $key => $id) {
+      $entity = $storage->load($id['target_id']);
+      if ($entity) {
+        $vars['items'][$key]['title'] = $entity->get('field_provus_title')
+          ->value;
+        $vars['items'][$key]['content'] = $entity->get('field_provus_body')
+          ->view('default');
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-name: Provus - Minimal
+name: Provus
 type: profile
 description: 'Provus by Promet Source. Kick start your website!'
 core_version_requirement: '^8.8 || ^9'
@@ -22,12 +22,14 @@ distribution:
   #
   # install:
   #   theme: my_theme
-  #   # To redirect to specific URL after profile installation set your finish_url: 
+  #   # To redirect to specific URL after profile installation set your finish_url:
   #   finish_url: ?welcome=1
   langcode: en
 
 # Modules to install to support the profile.
 install:
+  - admin_toolbar
+  - admin_toolbar_tools
   - history
   - block_content
   - breakpoint
@@ -42,7 +44,11 @@ install:
   - options
   - path
   - taxonomy
+  - default_content
+  - hal
+  - serialization
   - dblog
+  - menu_ui
   - search
   - shortcut
   - toolbar
@@ -53,6 +59,12 @@ install:
   - views_ui
   - editor
   - ckeditor
+  - provus_core
+  - provus_blocks
+  - gin_toolbar
+  - gin_login
+  - responsive_image
+  - workflows
 
 # Required modules
 # Note that any dependencies of the modules listed here will be installed automatically.
@@ -64,5 +76,7 @@ dependencies:
 # List any themes that should be installed as part of the profile installation.
 # Note that this will not set any theme as the default theme.
 themes:
+  - bootstrap_barrio
+  - bootstrap_sass
   - gin
-  - provus
+  - provus_bootstrap
