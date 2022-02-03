@@ -26,13 +26,15 @@ function _provus_setup_themes() {
     // Set the default and admin theme.
     \Drupal::configFactory()
       ->getEditable('system.theme')
-      ->set('default', 'provus_bootstrap')
+      ->set('default', 'provus')
       ->set('admin', 'gin')
       ->save(TRUE);
-
+  
     // Enable the admin theme.
     \Drupal::configFactory()
       ->getEditable('node.settings')
       ->set('use_admin_theme', TRUE)
       ->save(TRUE);
   }
+  
+  

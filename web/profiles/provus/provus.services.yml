@@ -1,4 +1,4 @@
 services:
-  provus.form_helper:
-    class: '\Drupal\provus\FormHelper'
+  wxt.form_helper:
+    class: '\Drupal\wxt\FormHelper'
     arguments: ['%app.root%', '@element_info']

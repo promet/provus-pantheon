@@ -1,8 +1,9 @@
-name: 'Provus Core'
+name: 'Provus Blocks'
 type: module
-description: 'Custom provus core configuration.'
+description: 'Custom provus blocks.'
 core_version_requirement: ^8 || ^9
 package: 'Provus'
+
 dependencies:
   - drupal:block
   - drupal:node
