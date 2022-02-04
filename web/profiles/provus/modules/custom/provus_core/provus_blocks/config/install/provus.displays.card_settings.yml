@@ -1,0 +1,11 @@
+displays:
+  card:
+    name: 'Card | Default'
+    cardstyle: { }
+  card_left:
+    name: 'Card | Image Left'
+    cardstyle:
+      horizontal: true
+  card_bg:
+    name: 'Card | Image Background'
+    cardstyle: { }
