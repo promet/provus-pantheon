@@ -44,6 +44,14 @@ function provus_blocks_theme_suggestions_block_alter(&$suggestions, $vars) {
       $display_mode = !empty($vars['elements']['content']['#provus_group_item_display']) ? $vars['elements']['content']['#provus_group_item_display'] : $block->get('field_provus_item_display')->value;
       $suggestions[] = $base_suggestion . '__provus_display_' . $display_mode;
     }
+    // For provus group, add the group display to suggestions.
+    if ($block_type == 'provus_group') {
+      // Get group display.
+      $group_display = $block->get('field_provus_group_display')->value;
+      $display_type = explode('_', $group_display);
+      $suggestions[] = $base_suggestion . '__' . $group_display;
+      $suggestions[] = $base_suggestion . '__' . $display_type[0];
+    }
   }
   return $suggestions;
 }
@@ -59,6 +67,10 @@ function provus_blocks_theme() {
     ],
     'block__provus_heading' => [
       'template' => 'block--provus-heading',
+      'base hook' => 'block'
+    ],
+    'block__provus_files_list' => [
+      'template' => 'block--provus-files-list',
       'base hook' => 'block'
     ],
     'block__provus_list' => [

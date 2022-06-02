@@ -25,6 +25,18 @@ function provus_core_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function provus_core_theme() {
+  return [
+    'node__card' => [
+      'template' => 'node--card',
+      'base hook' => 'node'
+    ],
+  ];
+}
+
+/**
  * Implements hook_entity_view_display_alter().
  */
 function provus_core_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
