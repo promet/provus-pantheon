@@ -71,7 +71,7 @@
   {% block content %}
     <div{{ content_attributes.addClass('card') }}>
       {% if content.image|render %}
-        <div class="card-img-top">
+        <div class="card-img-top rounded-circle">
           {{ content.image }}
         </div>
       {% endif %}

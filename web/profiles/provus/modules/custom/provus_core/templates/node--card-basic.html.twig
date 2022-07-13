@@ -70,16 +70,8 @@
 <div{{ attributes.addClass(classes) }}>
   {% block content %}
     <div{{ content_attributes.addClass('card') }}>
-      {% if content.image|render %}
-        <div class="card-img-top">
-          {{ content.image }}
-        </div>
-      {% endif %}
       <div class="card-body">
         <h3 class="card-title"><a href="{{ url }}" rel="bookmark">{{ label }}</a></h3>
-        {% if content.body|render %}
-          <div class="card-text">{{ content.body }}</div>
-        {% endif %}
       </div>
     </div>
   {% endblock %}
