@@ -51,6 +51,7 @@ third_party_settings:
         - 'bootstrap_layout_builder:blb_col_4'
       blacklisted_blocks:
         'Inline blocks':
+          - 'inline_block:provus_faq_item'
           - 'inline_block:provus_list_item'
           - 'inline_block:provus_stat_item'
           - 'inline_block:provus_tab_item'

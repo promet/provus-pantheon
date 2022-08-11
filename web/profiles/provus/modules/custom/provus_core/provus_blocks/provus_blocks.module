@@ -176,7 +176,7 @@ function provus_blocks_theme() {
      elseif ($block_type == 'provus_tabs') {
        _provus_preprocess_tabs($vars, $block);
      }
-     elseif ($block_type == 'provus_accordion') {
+     elseif ($block_type == 'provus_accordion' || $block_type == 'provus_faq_group') {
        _provus_preprocess_accordion($vars, $block);
      }
      elseif ($block_type == 'provus_group') {
