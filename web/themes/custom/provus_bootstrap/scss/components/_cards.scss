@@ -1,4 +1,9 @@
 // Card styles.
+.card-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
 .card-img-top {
   overflow: hidden;
   img {
@@ -10,7 +15,6 @@
 .card {
   border-radius: $card-border-radius;
   border: 1px solid $card-border-color;
-  margin-bottom: rem-calc(30);
   display: flex;
   height: 100%;
   .field--type-entity-reference {
@@ -78,13 +82,56 @@
   border: 1px solid $gray-lightest;
 }
 
-.card-img-overlay {
-  background: rgba(0,0,0,0.5);
-  color: $white;
-  h2, h3, h4, h5 ,h6 {
-    color: $white;
+.block-provus-card.card-wrapper {
+  .card {
+    min-height: 240px;
+    border-radius: $card-border-radius;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
-  a {
+  .card-img-overlay {
+    background: rgba(0, 0, 0, 0.5);
     color: $white;
+    display: flex;
+    align-items: flex-end;
+
+    h2, h3, h4, h5, h6 {
+      color: $white;
+    }
+  }
+  a:hover {
+    .card-img-overlay {
+      background: rgba(41, 62, 122, 0.85);
+    }
+  }
+}
+
+.node--type-provus-blog.node--view-mode-provus-card-tall {
+  .card {
+    border: none;
+  }
+  .card-body {
+    padding: 0;
+  }
+  .card-title {
+    margin-top: rem-calc(8);
+    a {
+      color: $text-primary;
+      text-decoration: none;
+      &:hover {
+        color: $primary-shade;
+        text-decoration: underline;
+      }
+    }
+  }
+  .card-date {
+    margin: rem-calc(16 0 8);
+    font-size: rem-calc(14);
+    color: $text-secondary;
+    text-decoration: none;
+  }
+  .card-img-top {
+    border-radius: $card-border-radius;
   }
 }
